@@ -1,0 +1,453 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+<title>work-together · 汽车数据看板入口</title>
+<meta name="description" content="多维度场景评分看板与新车上市日历的统一入口。" />
+<style>
+  :root {
+    --bg: #f5f5f7;
+    --surface: #ffffff;
+    --ink: #1d1d1f;
+    --muted: #6e6e73;
+    --faint: #86868b;
+    --rule: rgba(0, 0, 0, 0.08);
+    --accent: #2f4a3c;
+    --accent-dark: #243a31;
+    --red: #e30000;
+    --radius: 18px;
+    --shadow: 0 2px 12px rgba(0, 0, 0, 0.04);
+    --shadow-hover: 0 16px 40px rgba(0, 0, 0, 0.12);
+    --font: -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text",
+            "Helvetica Neue", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html, body { height: 100%; }
+
+  body {
+    font-family: var(--font);
+    color: var(--ink);
+    background: var(--bg);
+    min-height: 100%;
+    overflow-x: hidden;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+  }
+  ::selection { background: rgba(0, 113, 227, 0.18); }
+
+  /* 背景：纯净浅灰，无装饰，靠留白承载 */
+  .bg { position: fixed; inset: 0; z-index: 0; overflow: hidden; pointer-events: none; }
+  .blob { display: none; }
+
+  .wrap {
+    position: relative; z-index: 1; width: 100%; min-height: 100%;
+    display: flex; align-items: center; justify-content: center;
+    padding: 48px 24px;
+  }
+
+  .wrap-inner { width: 100%; max-width: 1040px; }
+
+  /* 标题 */
+  .brand-title {
+    display: inline-flex;
+    align-items: baseline;
+    justify-content: center;
+    gap: 0.3em;
+    margin-bottom: 42px;
+    font-family: var(--font);
+    font-size: clamp(40px, 7vw, 64px);
+    font-weight: 700;
+    letter-spacing: -0.03em;
+    line-height: 1;
+    color: var(--ink);
+    -webkit-font-smoothing: antialiased;
+  }
+  .brand-title .word { font-weight: 700; }
+  .brand-title .word.accent { color: #2f4a3c; font-weight: 650; }
+
+  header { text-align: center; margin-bottom: 12px; }
+
+  .cat-figure {
+    margin: 0 auto 36px; width: 100%; max-width: 920px;
+    animation: loginIn 0.6s ease both;
+  }
+  .cat-figure img {
+    width: 100%; height: clamp(200px, 28vw, 330px);
+    object-fit: cover; object-position: center 50%; display: block;
+    border-radius: 22px;
+    background: #fff; padding: 10px;
+    border: 1px solid rgba(0, 0, 0, 0.04);
+    box-shadow: var(--shadow);
+    box-sizing: border-box;
+  }
+
+  .grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 24px; }
+
+  .card {
+    position: relative; display: block; text-decoration: none; color: inherit;
+    padding: 34px 32px 30px;
+    border-radius: 20px;
+    background: var(--surface);
+    border: 1px solid rgba(0, 0, 0, 0.06);
+    box-shadow: var(--shadow);
+    transition: transform 0.35s ease, box-shadow 0.35s ease, border-color 0.35s ease;
+  }
+  .card:hover {
+    transform: translateY(-3px);
+    border-color: rgba(0, 0, 0, 0.12);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.06);
+  }
+
+  .icon {
+    width: 56px; height: 56px; border-radius: 14px;
+    display: grid; place-items: center; margin-bottom: 20px;
+    color: #fff;
+  }
+  .icon svg { width: 26px; height: 26px; }
+  .i1 { background: var(--accent); }
+  .i2 { background: var(--ink); }
+
+  .card h2 { font-size: 21px; font-weight: 650; margin-bottom: 10px; letter-spacing: -0.01em; }
+
+  .go {
+    display: inline-flex; align-items: center; gap: 7px;
+    margin-top: 24px; font-size: 15px; font-weight: 500;
+    color: var(--accent);
+    border-bottom: 1px solid transparent;
+    transition: border-color 0.3s ease;
+  }
+  .go svg { width: 15px; height: 15px; }
+  .card:hover .go { border-bottom-color: rgba(47, 74, 60, 0.22); }
+
+  /* ========== 退出按钮（主页面） ========== */
+  .logout-btn {
+    position: fixed; top: 22px; right: 24px; z-index: 50;
+    padding: 9px 18px; border-radius: 999px; cursor: pointer;
+    font-size: 13.5px; font-weight: 500; color: var(--muted);
+    background: var(--surface); border: 1px solid rgba(0, 0, 0, 0.08);
+    box-shadow: var(--shadow);
+    font-family: var(--font);
+    transition: transform 0.2s ease, color 0.2s ease;
+  }
+  .logout-btn:hover { transform: translateY(-1px); color: var(--accent); }
+
+  /* ========== 登录浮层 ========== */
+  .login-overlay {
+    position: fixed; inset: 0; z-index: 10000;
+    display: flex; align-items: center; justify-content: flex-end;
+    padding: 0 7vw 0 0;
+    background: var(--bg);
+    opacity: 1; transform: scale(1);
+    transition: opacity 0.4s ease, transform 0.4s ease;
+  }
+  .login-overlay.hidden { opacity: 0; transform: scale(1.02); pointer-events: none; }
+
+  .login-bg {
+    position: absolute; inset: 0; overflow: hidden; pointer-events: none;
+    background: linear-gradient(180deg, #f6f6f8 0%, #eeeff2 100%);
+  }
+  .login-bg .lg-art {
+    position: absolute; inset: 0; width: 100%; height: 100%;
+    object-fit: cover; object-position: center; opacity: 0.26;
+  }
+  .login-bg .lg-art--soft {
+    opacity: 0.2; filter: blur(26px) saturate(105%);
+    transform: scale(1.18) translate(1.5%, -1%);
+    mix-blend-mode: multiply;
+  }
+  .login-bg .lg-glow {
+    position: absolute; inset: 0;
+    background: linear-gradient(180deg, rgba(255,255,255,0.72) 0%, rgba(255,255,255,0.52) 100%);
+  }
+  @media (max-width: 800px) {
+    .login-overlay { justify-content: center; padding: 0 24px; }
+    .login-bg .lg-art { opacity: 0.28; }
+    .login-bg .lg-art--soft { display: none; }
+  }
+
+  .login-card {
+    position: relative; z-index: 3;
+    width: 100%; max-width: 420px; margin: 24px; padding: 40px 38px;
+    border-radius: 22px;
+    background: rgba(251, 251, 253, 0.42);
+    border: 1px solid rgba(255, 255, 255, 0.45);
+    box-shadow: 0 12px 40px rgba(31, 41, 34, 0.06);
+    -webkit-backdrop-filter: saturate(150%) blur(14px);
+    backdrop-filter: saturate(150%) blur(14px);
+    animation: loginCardIn 0.5s ease both;
+  }
+  @keyframes loginCardIn { from { opacity: 0; transform: translateY(16px); } to { opacity: 1; transform: none; } }
+
+  .login-card h3 {
+    text-align: center; margin-bottom: 28px;
+    font-size: 27px; font-weight: 700; letter-spacing: -0.01em;
+    color: #000;
+  }
+
+  .login-field { margin-bottom: 20px; }
+  .login-field label { display: block; color: var(--muted); font-size: 13px; font-weight: 600; margin-bottom: 10px; }
+  .input-wrap { position: relative; }
+  .input-icon { position: absolute; left: 14px; top: 50%; transform: translateY(-50%); color: var(--faint); display: grid; place-items: center; width: 20px; height: 20px; pointer-events: none; }
+  .input-icon svg { width: 18px; height: 18px; }
+  .login-field input {
+    width: 100%; padding: 13px 16px 13px 40px; font-size: 15px; color: var(--ink);
+    background: var(--surface); border: 1px solid rgba(0, 0, 0, 0.12);
+    border-radius: 12px; outline: none; font-family: var(--font);
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+  }
+  .login-field input:focus { border-color: var(--accent); box-shadow: 0 0 0 4px rgba(47, 74, 60, 0.14); }
+  .login-field input::placeholder { color: var(--faint); }
+
+  .pw-toggle {
+    position: absolute; right: 12px; top: 50%; transform: translateY(-50%);
+    background: none; border: none; cursor: pointer; color: var(--faint);
+    display: grid; place-items: center; width: 24px; height: 24px; padding: 0;
+  }
+  .pw-toggle svg { width: 18px; height: 18px; }
+  .pw-toggle.on { color: var(--accent); }
+
+  .login-btn {
+    width: 100%; padding: 15px 24px; margin-top: 8px; border-radius: 980px; border: 1px solid var(--accent);
+    background: var(--accent); color: #fff; font-size: 16px; font-weight: 600; cursor: pointer;
+    font-family: var(--font);
+    transition: background 0.25s ease, opacity 0.2s ease, transform 0.1s ease;
+  }
+  .login-btn:hover { background: var(--accent-dark); }
+  .login-btn:active { transform: scale(0.98); }
+  .login-btn:disabled { opacity: 0.6; cursor: not-allowed; transform: none; }
+
+  .login-error {
+    margin-top: 16px; padding: 12px 14px; border-radius: 12px;
+    background: rgba(227, 0, 0, 0.08); color: var(--red); font-size: 13px; line-height: 1.5; display: none;
+  }
+  .login-error.show { display: block; }
+
+  /* ===== 极简入场动效：透明度 + 轻微位移，慢节奏错落 ===== */
+  .login-card h3 { animation: loginIn 0.5s ease both; animation-delay: 0.08s; }
+  .login-field { animation: loginIn 0.5s ease both; }
+  .login-field:nth-child(2) { animation-delay: 0.2s; }
+  .login-field:nth-child(3) { animation-delay: 0.28s; }
+  .login-btn { animation: loginIn 0.5s ease both; animation-delay: 0.36s; }
+  .login-error.show { animation: loginIn 0.4s ease both; }
+  @keyframes loginIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
+  @media (prefers-reduced-motion: reduce) {
+    .login-card, .login-card h3, .login-field, .login-btn, .login-error.show { animation: none !important; }
+  }
+
+  @media (max-width: 900px) {
+    .grid { grid-template-columns: 1fr; gap: 20px; }
+    header { margin-bottom: 40px; }
+    .wrap { padding: 36px 18px; align-items: flex-start; }
+    .brand-title { font-size: clamp(34px, 11vw, 52px); }
+    .login-overlay { padding: 36px 18px; }
+    .login-card { padding: 30px 24px; }
+    .login-card h3 { font-size: 24px; }
+    .logout-btn { top: 16px; right: 16px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="wrap">
+  <div class="wrap-inner">
+    <div class="bg" aria-hidden="true">
+      <div class="blob b1"></div>
+      <div class="blob b2"></div>
+      <div class="blob b3"></div>
+    </div>
+
+    <header>
+      <div class="brand-title">
+        <span class="word">work</span>
+        <span class="word accent">together</span>
+      </div>
+    </header>
+
+    <div class="cat-figure">
+      <img src="/assets/cat-coding.jpg" alt="一只正在敲代码的小猫" />
+    </div>
+
+    <div class="grid">
+      <a class="card" href="/car-evaluation/">
+        <div class="icon i1">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="3" y="3" width="7" height="9" rx="1.5"/><rect x="14" y="3" width="7" height="5" rx="1.5"/>
+            <rect x="14" y="12" width="7" height="9" rx="1.5"/><rect x="3" y="16" width="7" height="5" rx="1.5"/>
+          </svg>
+        </div>
+        <h2>多维度场景评分看板</h2>
+        <span class="go">进入看板
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M5 12h13M13 6l6 6-6 6"/>
+          </svg>
+        </span>
+      </a>
+
+      <a class="card" href="/car-launch-calendar-react/">
+        <div class="icon i2">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="3" y="5" width="18" height="16" rx="2.5"/><path d="M3 10h18M8 3v4M16 3v4"/>
+            <path d="M8.5 14.5l2 2 4-4"/>
+          </svg>
+        </div>
+        <h2>新车上市日历</h2>
+        <span class="go">进入日历
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M5 12h13M13 6l6 6-6 6"/>
+          </svg>
+        </span>
+      </a>
+    </div>
+  </div>
+</div>
+
+<button class="logout-btn" id="logoutBtn">退出</button>
+
+<div class="login-overlay" id="loginOverlay">
+  <div class="login-bg" aria-hidden="true">
+    <img class="lg-art" src="/assets/car-history-7.jpg" alt="" />
+    <img class="lg-art lg-art--soft" src="/assets/car-history-7.jpg" alt="" />
+    <div class="lg-glow"></div>
+  </div>
+  <div class="login-card">
+    <h3>Welcome back</h3>
+    <form id="loginForm">
+      <div class="login-field">
+        <label for="loginUser">账号</label>
+        <div class="input-wrap">
+          <span class="input-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 4-6 8-6s8 2 8 6"/>
+            </svg>
+          </span>
+          <input id="loginUser" type="text" placeholder="请输入账号" autocomplete="username" />
+        </div>
+      </div>
+      <div class="login-field">
+        <label for="loginPass">密码</label>
+        <div class="input-wrap">
+          <span class="input-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V8a4 4 0 018 0v3"/>
+            </svg>
+          </span>
+          <input id="loginPass" type="password" placeholder="请输入密码" autocomplete="current-password" />
+          <button type="button" class="pw-toggle" id="pwToggle" aria-label="显示/隐藏密码">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7-10-7-10-7z"/><circle cx="12" cy="12" r="3"/>
+            </svg>
+          </button>
+        </div>
+      </div>
+      <button type="submit" class="login-btn" id="loginBtn">登录</button>
+      <div class="login-error" id="loginError"></div>
+    </form>
+  </div>
+</div>
+
+<script>
+(function () {
+  const AUTH_STORAGE_KEY = 'car_eval_auth_v1'
+  const AUTH_EMAIL_DOMAIN = 'car-eval.com'
+  const SUPABASE_URL = 'https://ucsubgbnkcdjbgozqfaj.supabase.co'
+  const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InVjc3ViZ2Jua2NkamJnb3pxZmFqIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODY3NTM4ODAsImV4cCI6MjEwMjMyOTg4MH0.gClpGM9iQDUc65ZEGJTVMmrqgQ788TtRAWfU3v6_eZU'
+
+  const overlay = document.getElementById('loginOverlay')
+  const form = document.getElementById('loginForm')
+  const userEl = document.getElementById('loginUser')
+  const passEl = document.getElementById('loginPass')
+  const btn = document.getElementById('loginBtn')
+  const errEl = document.getElementById('loginError')
+  const logout = document.getElementById('logoutBtn')
+  const pwToggle = document.getElementById('pwToggle')
+
+  function getSession() {
+    try {
+      const raw = localStorage.getItem(AUTH_STORAGE_KEY)
+      if (!raw) return null
+      const s = JSON.parse(raw)
+      if (!s || !s.access_token) return null
+      if (s.expires_at && Date.now() >= s.expires_at - 60000) return null
+      return s
+    } catch (e) { return null }
+  }
+
+  function saveSession(resp) {
+    const s = {
+      access_token: resp.access_token,
+      refresh_token: resp.refresh_token,
+      token_type: resp.token_type || 'bearer',
+      expires_at: resp.expires_in ? Date.now() + resp.expires_in * 1000 : 0,
+    }
+    localStorage.setItem(AUTH_STORAGE_KEY, JSON.stringify(s))
+  }
+
+  function normalizeEmail(input) {
+    input = String(input || '').trim()
+    if (!input) return ''
+    if (input.indexOf('@') === -1) input = input + '@' + AUTH_EMAIL_DOMAIN
+    return input.toLowerCase()
+  }
+
+  function showLogin() { overlay.classList.remove('hidden') }
+  function showHome() { overlay.classList.add('hidden') }
+
+  function showError(msg) { errEl.textContent = msg; errEl.classList.add('show') }
+  function clearError() { errEl.textContent = ''; errEl.classList.remove('show') }
+
+  async function doLogin(e) {
+    e.preventDefault()
+    clearError()
+    const email = normalizeEmail(userEl.value)
+    const password = passEl.value
+    if (!email || !password) { showError('请输入账号和密码'); return }
+    btn.disabled = true
+    btn.textContent = '登录中…'
+    try {
+      const resp = await fetch(SUPABASE_URL + '/auth/v1/token?grant_type=password', {
+        method: 'POST',
+        headers: { apikey: SUPABASE_ANON_KEY, 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email, password }),
+      })
+      if (!resp.ok) {
+        const txt = await resp.text()
+        let msg = '登录失败，请检查账号和密码'
+        try { const j = JSON.parse(txt); if (j.msg || j.message) msg = j.msg || j.message } catch (_) {}
+        throw new Error(msg)
+      }
+      const data = await resp.json()
+      saveSession(data)
+      showHome()
+      userEl.value = ''; passEl.value = ''
+    } catch (err) {
+      showError(err.message || '登录失败')
+    } finally {
+      btn.disabled = false
+      btn.textContent = '登录'
+    }
+  }
+
+  form.addEventListener('submit', doLogin)
+
+  pwToggle.addEventListener('click', () => {
+    const isPw = passEl.type === 'password'
+    passEl.type = isPw ? 'text' : 'password'
+    pwToggle.classList.toggle('on', isPw)
+  })
+
+  logout.addEventListener('click', () => {
+    localStorage.removeItem(AUTH_STORAGE_KEY)
+    userEl.value = ''; passEl.value = ''
+    showLogin()
+  })
+
+  if (getSession()) showHome()
+})()
+</script>
+
+</body>
+</html>

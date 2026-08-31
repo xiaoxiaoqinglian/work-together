@@ -1,0 +1,14 @@
+{
+  "name": "work-together",
+  "version": "1.0.0",
+  "private": true,
+  "description": "汽车数据看板统一站点：多维度场景评分看板 + 新车上市日历，纯静态构建，可部署至任意静态托管平台",
+  "scripts": {
+    "build": "node scripts/build.mjs",
+    "build:evaluation": "npm --prefix car-evaluation run build",
+    "build:calendar": "npm --prefix car-launch-calendar-react run build",
+    "preview": "node scripts/preview.mjs",
+    "verify": "node scripts/verify.mjs"
+  },
+  "license": "MIT"
+}

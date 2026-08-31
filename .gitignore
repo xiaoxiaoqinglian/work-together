@@ -1,0 +1,37 @@
+# 依赖
+node_modules/
+
+# 构建产物
+dist/
+.dist/
+
+# 本地工具状态
+.workbuddy/
+.trae/
+
+# 系统文件
+.DS_Store
+Thumbs.db
+
+# 编辑器 / IDE
+.vscode/
+.idea/
+
+# 环境变量
+.env
+.env.local
+.env.*.local
+
+# 日志
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Vite 临时 hook 快照（构建时自动生成，部署不需要）
+vite.config.js.timestamp-*.mjs
+*.timestamp-*.mjs
+
+# 密钥相关（服务端脚本用 service_role，绝不进部署/前端）
+*.sb_secret
+.env.sb
