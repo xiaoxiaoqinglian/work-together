@@ -23,42 +23,12 @@
    ===================================================================== */
 
 window.CAR_DATA = {
-  updatedAt: "2026-08-31",
+  updatedAt: "2026-09-03",
   dataSource: "AI 联网搜索汇总（汽车之家、新浪汽车、新华网、易车、太平洋汽车、凤凰网汽车等公开报道）",
   events: [
 
     /* ============ 即将上市（未来约 30 天） ============ */
 
-    {
-      id: "byd-sealion08-launch",
-      brand: "比亚迪",
-      model: "海狮08",
-      type: "SUV",
-      eventType: "上市发布会",
-      section: "upcoming",
-      date: "2026-09-02",
-      dateConfirmed: true,
-      price: "23-28万元",
-      priceNote: "预售价",
-      desc: "中大型旗舰SUV，DM-i 插混 / 纯电双动力，纯电续航最高 900km",
-      sourceName: "凤凰网汽车",
-      sourceUrl: "https://auto.ifeng.com/c/8vt4XAsd8A2"
-    },
-    {
-      id: "lixiang-mega-launch",
-      brand: "理想",
-      model: "新一代 MEGA",
-      type: "MPV",
-      eventType: "上市发布会",
-      section: "upcoming",
-      date: "2026-09-02",
-      dateConfirmed: true,
-      price: "55.98万元起",
-      priceNote: "预计售价",
-      desc: "焕新旗舰 MPV：108kWh 电池、后轮转向、4 颗激光雷达、800V 主动稳定杆",
-      sourceName: "太平洋汽车",
-      sourceUrl: "https://m.toutiao.com/group/7678277775786132031/"
-    },
     {
       id: "xiaomi-n70-launch",
       brand: "小米",
@@ -66,13 +36,13 @@ window.CAR_DATA = {
       type: "SUV",
       eventType: "上市发布会",
       section: "upcoming",
-      date: "2026-09",
+      date: "2026-09-07",
       dateConfirmed: true,
       price: "25.99万元起",
       priceNote: "Max 版预售价",
-      desc: "小米首款增程 SUV，大五座布局，基于昆仑架构，综合续航 1146km",
-      sourceName: "极目新闻（引小米官方）",
-      sourceUrl: "http://m.toutiao.com/group/7668319156432814638/"
+      desc: "小米首款增程 SUV，大五座布局，基于昆仑架构，综合续航 1461km",
+      sourceName: "汽车之家",
+      sourceUrl: "https://www.autohome.com.cn/news/202609/1316898.html"
     },
     {
       id: "xiaomi-n90-launch",
@@ -81,13 +51,13 @@ window.CAR_DATA = {
       type: "SUV",
       eventType: "上市发布会",
       section: "upcoming",
-      date: "2026-09",
+      date: "2026-09-07",
       dateConfirmed: true,
       price: "29.99万元起",
       priceNote: "Max 版预售价",
       desc: "七座增程旗舰 SUV，家用大空间，CLTC 综合续航最高 1705km",
-      sourceName: "极目新闻（引小米官方）",
-      sourceUrl: "http://m.toutiao.com/group/7668319156432814638/"
+      sourceName: "汽车之家",
+      sourceUrl: "https://www.autohome.com.cn/news/202609/1316898.html"
     },
     {
       id: "leapmotor-techday",
@@ -180,19 +150,19 @@ window.CAR_DATA = {
       sourceUrl: "http://m.toutiao.com/group/7679031211779490355/"
     },
     {
-      id: "zhiji-ls6-launch",
+      id: "zhiji-ls6-presale",
       brand: "智己",
       model: "全新一代 LS6",
       type: "SUV",
-      eventType: "上市发布会",
+      eventType: "预售发布会",
       section: "upcoming",
-      date: "2026-09",
+      date: "2026-09-10",
       dateConfirmed: true,
       price: null,
       priceNote: null,
-      desc: "NEXT·2028 战略首款车型，全系标配全线控底盘与 IM Claw 智能体",
-      sourceName: "智己汽车官网",
-      sourceUrl: "https://www.immotors.com/website/news_detail/237"
+      desc: "官方定档 9 月 10 日预售，\"陆上 A320\"，全系标配全线控底盘与 IM Claw 智能体",
+      sourceName: "IT之家",
+      sourceUrl: "http://m.toutiao.com/group/7680746115431547438/"
     },
     {
       id: "shenxingzhe-8-launch",
@@ -224,9 +194,114 @@ window.CAR_DATA = {
       sourceName: "新华网",
       sourceUrl: "http://www2.xinhuanet.com/auto/20260819/7f46734ba8c54d1eb44fed412e38a53f/c.html"
     },
+    {
+      id: "qijing-gx7-presale",
+      brand: "启境",
+      model: "GX7",
+      type: "SUV",
+      eventType: "预售发布会",
+      section: "upcoming",
+      date: "2026-09-04",
+      dateConfirmed: true,
+      price: null,
+      priceNote: null,
+      desc: "广汽×华为乾崑第二款车，阔五座SUV，ADS5四激光雷达、20秒一键成床、超级增程550kW",
+      sourceName: "IT之家",
+      sourceUrl: "http://m.toutiao.com/group/7679086784949338633/"
+    },
+    {
+      id: "voyah-mengxiangjia9-presale",
+      brand: "岚图",
+      model: "梦想家 9",
+      type: "MPV",
+      eventType: "预售发布会",
+      section: "upcoming",
+      date: "2026-09-05",
+      dateConfirmed: true,
+      price: null,
+      priceNote: null,
+      desc: "旗舰中大型MPV，896线激光雷达，纯电701km+1.5T插混双动力",
+      sourceName: "易车",
+      sourceUrl: "https://news.yiche.com/hao/wenzhang/112756744/"
+    },
+    {
+      id: "lixiang-i9-launch",
+      brand: "理想",
+      model: "理想 i9",
+      type: "SUV",
+      eventType: "上市发布会",
+      section: "upcoming",
+      date: "2026-09",
+      dateConfirmed: true,
+      price: null,
+      priceNote: null,
+      desc: "纯电旗舰六座SUV，财报沟通会官宣9月中旬发布，800V+5C超充、双电机四驱",
+      sourceName: "易车（引理想财报沟通会）",
+      sourceUrl: "https://hao.yiche.com/wenzhang/112622207/"
+    },
+    {
+      id: "geely-yinhe-tt-launch",
+      brand: "吉利银河",
+      model: "银河 TT",
+      type: "轿车",
+      eventType: "上市发布会",
+      section: "upcoming",
+      date: "2026-09-10",
+      dateConfirmed: true,
+      price: "14.59-20.98万元",
+      priceNote: "预售价",
+      desc: "C级纯电运动轿跑，官方定档 9 月 10 日杭州上市，全系800V+6C超充，零百3.8秒",
+      sourceName: "新浪汽车（引官方）",
+      sourceUrl: "https://k.sina.com.cn/article_1912222221_71fa320d04001ofvy.html"
+    },
+    {
+      id: "geely-xingyue-l-plus-debut",
+      brand: "吉利",
+      model: "星越L PLUS",
+      type: "SUV",
+      eventType: "新车发布会",
+      section: "upcoming",
+      date: "2026-09-05",
+      dateConfirmed: true,
+      price: null,
+      priceNote: null,
+      desc: "中大型旗舰智混SUV，大五座布局，8月31日官宣亮相、9月5日正式发布",
+      sourceName: "汽车之家",
+      sourceUrl: "https://m.autohome.com.cn/news/202608/1316831.html"
+    },
 
     /* ============ 最近上市（近 7 天） ============ */
 
+    {
+      id: "lixiang-mega-launch",
+      brand: "理想",
+      model: "新一代 MEGA",
+      type: "MPV",
+      eventType: "上市发布会",
+      section: "recent",
+      date: "2026-09-02",
+      dateConfirmed: true,
+      price: "50.98万元",
+      priceNote: null,
+      desc: "仅 Home 版全国统一价 50.98 万元，全系后轮转向+4颗激光雷达+800V主动防倾",
+      sourceName: "央广网",
+      sourceUrl: "http://auto.cnr.cn/cz/20260903/t20260903_527803615.shtml"
+    },
+    {
+      id: "byd-sealion08-launch",
+      brand: "比亚迪",
+      model: "海狮08",
+      type: "SUV",
+      eventType: "上市发布会",
+      section: "recent",
+      date: "2026-09-02",
+      dateConfirmed: true,
+      price: "22.99-27.99万元",
+      priceNote: null,
+      desc: "海洋网旗舰SUV 9月2日上市，全系云辇-A空悬+后轮转向，纯电续航最高900km",
+      sourceName: "中国汽车趋势网",
+      sourceUrl: "http://www.chinaautotrends.com/xincheMes.aspx?id=19321&c=17&t=5"
+    },
     {
       id: "zhiji-l6-launch",
       brand: "智己",
@@ -258,21 +333,6 @@ window.CAR_DATA = {
       sourceUrl: "https://auto.sina.com.cn/news/2026-08-22/detail-inipeptu3169666.shtml"
     },
     {
-      id: "greatwall-h9-linghun-launch",
-      brand: "长城",
-      model: "H9 力魂版",
-      type: "SUV",
-      eventType: "上市发布会",
-      section: "recent",
-      date: "2026-08-24",
-      dateConfirmed: true,
-      price: "21.49万元起",
-      priceNote: "限时优惠价",
-      desc: "专属定制车色+三把锁，柴汽油双动力越野专属升级",
-      sourceName: "爱卡汽车",
-      sourceUrl: "https://info.xcar.com.cn/202608/news_2082730_1.html"
-    },
-    {
       id: "firefly-xinchangluan-launch",
       brand: "萤火虫",
       model: "心海长夏特别版",
@@ -301,66 +361,6 @@ window.CAR_DATA = {
       desc: "小钢炮双车上市，运动套件+低重心底盘调校，主打年轻人个性",
       sourceName: "今日头条",
       sourceUrl: "http://m.toutiao.com/group/7679025368258347571/"
-    },
-    {
-      id: "chery-fengyun-t7",
-      brand: "奇瑞",
-      model: "风云 T7",
-      type: "SUV",
-      eventType: "上市发布会",
-      section: "recent",
-      date: "2026-08-26",
-      dateConfirmed: true,
-      price: "9.79-11.89万元",
-      priceNote: "抢先置换价9.49-11.59万元",
-      desc: "全系 600km 续航，65.05kWh 犀牛电池，全系 9 气囊",
-      sourceName: "汽车之家",
-      sourceUrl: "https://chejiahao.m.autohome.com.cn/pingan/chejiahao/detailinfo/26266034"
-    },
-    {
-      id: "arcfox-alpha-t7-presale",
-      brand: "极狐",
-      model: "阿尔法 T7",
-      type: "SUV",
-      eventType: "预售发布会",
-      section: "recent",
-      date: "2026-08-26",
-      dateConfirmed: true,
-      price: "20.00-26.98万元",
-      priceNote: "预售价",
-      desc: "华为乾崑智驾 + 宁德时代电池 + 麦格纳制造",
-      sourceName: "新浪汽车",
-      sourceUrl: "https://auto.sina.com.cn/newcar/2026-08-22/detail-inipazsm1585550.shtml"
-    },
-    {
-      id: "aion-ray7-launch",
-      brand: "埃安",
-      model: "Ray7",
-      type: "轿车",
-      eventType: "上市发布会",
-      section: "recent",
-      date: "2026-08-25",
-      dateConfirmed: true,
-      price: "14.98万元起",
-      priceNote: "经销商行情价",
-      desc: "800V 高压平台，700km 续航，溜背轿跑造型",
-      sourceName: "易车",
-      sourceUrl: "https://dealer.yiche.com/100139510/news/202608/1458515152_190586.html"
-    },
-    {
-      id: "baojun-yueye-plus-2026",
-      brand: "宝骏",
-      model: "悦也Plus 2026款",
-      type: "SUV",
-      eventType: "上市发布会",
-      section: "recent",
-      date: "2026-08-25",
-      dateConfirmed: true,
-      price: "7.68-10.58万元",
-      priceNote: null,
-      desc: "7 万级方盒子 SUV 焕新，全能潮玩定位",
-      sourceName: "易车",
-      sourceUrl: "https://dealer.yiche.com/100071761/news/202608/1458650769.html"
     },
 
     /* ============ 更远预告（30 天以外） ============ */
@@ -394,7 +394,96 @@ window.CAR_DATA = {
       desc: "大型五座SUV，纯电续航最高850km，云辇-A双腔空悬+天神之眼B",
       sourceName: "中国经营报",
       sourceUrl: "http://m.toutiao.com/group/7677435526873367050/"
+    },
+    {
+      id: "byd-han-launch",
+      brand: "比亚迪",
+      model: "大汉",
+      type: "轿车",
+      eventType: "上市发布会",
+      section: "future",
+      date: "2026-Q4",
+      dateConfirmed: false,
+      price: null,
+      priceNote: null,
+      desc: "比亚迪旗舰轿车，官方已开启预售，上市发布会时间未定，预计四季度",
+      sourceName: "易车公众号（引比亚迪）",
+      sourceUrl: "https://m.weibo.cn/detail/5339113534525418"
+    },
+    {
+      id: "tengshi-z9s-launch",
+      brand: "腾势",
+      model: "Z9S",
+      type: "轿车",
+      eventType: "上市发布会",
+      section: "future",
+      date: "2026-Q4",
+      dateConfirmed: false,
+      price: null,
+      priceNote: null,
+      desc: "腾势旗舰轿车已开启预售，上市发布会时间未定，预计四季度",
+      sourceName: "易车公众号（引比亚迪）",
+      sourceUrl: "https://m.weibo.cn/detail/5339113534525418"
+    },
+    {
+      id: "byd-xia-launch",
+      brand: "比亚迪",
+      model: "夏",
+      type: "MPV",
+      eventType: "新车发布会",
+      section: "future",
+      date: "2026-Q4",
+      dateConfirmed: false,
+      price: "25-35万元",
+      priceNote: "媒体预测",
+      desc: "比亚迪首款中大型MPV，约5.2米车长，DM5.0插混七座，预计Q4上市",
+      sourceName: "易车",
+      sourceUrl: "https://hao.m.yiche.com/wenzhang/111878902/"
+    },
+    {
+      id: "geely-battleship700-launch",
+      brand: "吉利银河",
+      model: "战舰 700",
+      type: "SUV",
+      eventType: "上市发布会",
+      section: "future",
+      date: "2026-Q4",
+      dateConfirmed: true,
+      price: "23.98万元起",
+      priceNote: "预售价",
+      desc: "AI全地形硬派SUV，首搭AI新能源越野技术，官方公布预计四季度上市",
+      sourceName: "中国网汽车",
+      sourceUrl: "http://auto.china.com.cn/newcar/20260828/733306.shtml"
+    },
+    {
+      id: "vw-id-aura-t6-launch",
+      brand: "大众",
+      model: "ID. AURA T6",
+      type: "SUV",
+      eventType: "上市发布会",
+      section: "future",
+      date: "2026-Q4",
+      dateConfirmed: false,
+      price: "13.59万元起",
+      priceNote: "预售价",
+      desc: "一汽-大众智电2.0首款车型，全球首款量产激光雷达纯电SUV，已预售，上市未定",
+      sourceName: "新浪汽车",
+      sourceUrl: "https://auto.sina.com.cn/newcar/2026-08-28/detail-inipwnxt9975672.shtml"
+    },
+    {
+      id: "xiaopeng-gx-launch",
+      brand: "小鹏",
+      model: "GX（G01 旗舰SUV）",
+      type: "SUV",
+      eventType: "上市发布会",
+      section: "future",
+      date: "2026-Q4",
+      dateConfirmed: false,
+      price: null,
+      priceNote: null,
+      desc: "小鹏新一代旗舰SUV，推进入四季度发布，上市时间尚未官宣具体日期",
+      sourceName: "中国EV新车日历",
+      sourceUrl: "https://blade-note.com/china-ev-launch-calendar-2026h2/"
     }
-
   ]
 };
