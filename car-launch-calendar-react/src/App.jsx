@@ -13,13 +13,12 @@ const EVENT_ORDER = ['上市发布会', '预售发布会', '技术发布会', '�
 const DEFAULT_FILTERS = { brand: '全部', type: '全部', event: '全部', query: '' }
 
 // 把单条事件的 date 解析为一个可供比较（距今多少天）的估值。
-// 精确到日：返回真实天数；模糊到月/季/半年：按该时间段起始日作为近似天数。
+// 精确到日：返回真实天数；
+// 模糊到月/季/半年：日期不确定，统一放大到 9999，避免被误判进“未来 7/30 天”桶，
+//               使其自然落入“更远预告”，符合“仅精确日期计入近期”的口径。
 function daysAway(e) {
   const p = parseDate(e.date)
   if (p.kind === 'day') return diffDays(p.date)
-  if (p.kind === 'month') return diffDays(new Date(p.year, p.month - 1, 1))
-  if (p.kind === 'quarter') return diffDays(new Date(p.year, (p.quarter - 1) * 3, 1))
-  if (p.kind === 'half') return diffDays(new Date(p.year, (p.half - 1) * 6, 1))
   return 9999
 }
 
