@@ -134,7 +134,7 @@ export default function App({ data }) {
           icon="◆"
           title="更远预告"
           count={future.length}
-          sub="30 天以外的已官宣或媒体预计计划，先睹为快"
+          sub="30 天以外，或尚未明确具体发布会时间的新车与事件，先睹为快"
         >
           <FutureList items={future} filtersActive={filtersActive} onReset={resetFilters} />
         </Section>
