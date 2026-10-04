@@ -1,0 +1,30 @@
+name: supabase-keepalive
+
+on:
+  schedule:
+    - cron: '0 3 * * *'   # 每天 03:00 UTC（北京时间 11:00）跑一次
+  workflow_dispatch:      # 支持手动触发，便于测试
+
+jobs:
+  ping:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Ping Supabase (retry x3)
+        env:
+          SB_ANON: ${{ secrets.SB_ANON }}
+        run: |
+          URL="https://ucsubgbnkcdjbgozqfaj.supabase.co/rest/v1/newcar-calendar?select=id&limit=1"
+          for i in 1 2 3; do
+            CODE=$(curl -s -o /dev/null -w "%{http_code}" \
+              "$URL" \
+              -H "apikey: ${SB_ANON}" \
+              -H "Authorization: Bearer ${SB_ANON}")
+            echo "attempt $i -> HTTP $CODE"
+            if [ "$CODE" = "200" ]; then
+              echo "keep-alive OK"
+              exit 0
+            fi
+            sleep 10
+          done
+          echo "keep-alive FAILED after 3 attempts"
+          exit 1
